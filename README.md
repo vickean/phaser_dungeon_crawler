@@ -1,4 +1,13 @@
-# 🚀 Welcome to your new awesome project!
+# Phaser 3 Dungeon Crawler Tutorial
+
+Learning how to use Phaser 3 to build an RPG dungeon crawler.
+Based on tutorial series on Ourcade by Tommy Leung aka [@supertommy](https://github.com/supertommy).
+
+[Dungeon Crawler in Phaser 3](https://www.youtube.com/playlist?list=PLumYWZ2t7CRtgjbZK0JMoXHjebeYmT85-)
+
+Assets credits:
+
+- [Dungeon Tileset II - 0x72](https://0x72.itch.io/dungeontileset-ii)
 
 Notes:
 
@@ -8,16 +17,4 @@ Notes:
 4. `yarn add file-loader -D` to install `file-loader` for webpack.
 5. Use `file-loader` in webpack.config.js to serve static images.
 
-This project has been created using **webpack-cli**, you can now run
-
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+Use `yarn serve` to run locally.
