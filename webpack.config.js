@@ -16,7 +16,11 @@ const config = {
   },
   devServer: {
     open: true,
-    host: 'localhost',
+    // host: 'localhost',
+    host: '0.0.0.0', //your ip address
+    port: 8080,
+    disableHostCheck: true,
+    openPage: 'http://localhost:8080',
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -5,6 +5,11 @@ Based on tutorial series on Ourcade by Tommy Leung aka [@supertommy](https://git
 
 [Dungeon Crawler in Phaser 3](https://www.youtube.com/playlist?list=PLumYWZ2t7CRtgjbZK0JMoXHjebeYmT85-)
 
+Tools:
+
+- [Tiled - tilemap editor](https://www.mapeditor.org/)
+- [Free Texture Packer](https://free-tex-packer.com/app/)
+
 Assets credits:
 
 - [Dungeon Tileset II - 0x72](https://0x72.itch.io/dungeontileset-ii)
