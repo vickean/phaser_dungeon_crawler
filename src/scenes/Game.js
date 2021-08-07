@@ -4,11 +4,16 @@ import { debugDraw } from '../utils/debug';
 export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
-    this.debugOn = true;
+    this.debugOn = false;
   }
 
   preload() {
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    // sets debugOn based on debug setting in main Phaser config
+    if (this.game) {
+      this.debugOn = this.game.config.physics.arcade.debug;
+    }
   }
 
   create() {
@@ -32,7 +37,10 @@ export default class Game extends Phaser.Scene {
       'knight_m',
       'knight_m_idle_anim_f0.png'
     );
-    this.knightM.body.setSize(this.knightM.width, this.knightM.height * 0.6);
+    this.knightM.body.setSize(
+      this.knightM.width * 0.7,
+      this.knightM.height * 0.6
+    );
     this.knightM.body.offset.y = 12;
 
     this.anims.create({
@@ -66,7 +74,7 @@ export default class Game extends Phaser.Scene {
     // to ensure things above player get loaded in last
     map.createLayer('Walls_Above', tileset);
 
-    this.cameras.main.startFollow(this.knightM, true);
+    this.cameras.main.startFollow(this.knightM);
   }
 
   update(t, dt) {
