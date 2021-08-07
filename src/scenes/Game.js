@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import { debugDraw } from '../utils/debug';
+import { createLizardAnims } from '../anims/EnemyAnims';
+import { createCharacterAnims } from '../anims/CharacterAnims';
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -17,6 +19,10 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    // create anims
+    createLizardAnims(this.anims);
+    createCharacterAnims(this.anims);
+
     const map = this.make.tilemap({ key: 'dungeon' });
     const tileset = map.addTilesetImage('dungeon', 'tiles');
 
@@ -43,33 +49,18 @@ export default class Game extends Phaser.Scene {
     );
     this.knightM.body.offset.y = 12;
 
-    this.anims.create({
-      key: 'knight_m_idle',
-      frames: this.anims.generateFrameNames('knight_m', {
-        prefix: 'knight_m_idle_anim_f',
-        suffix: '.png',
-        start: 0,
-        end: 3,
-      }),
-      repeat: -1,
-      frameRate: 10,
-    });
-
-    this.anims.create({
-      key: 'knight_m_run',
-      frames: this.anims.generateFrameNames('knight_m', {
-        prefix: 'knight_m_run_anim_f',
-        suffix: '.png',
-        start: 0,
-        end: 3,
-      }),
-      repeat: -1,
-      frameRate: 10,
-    });
-
     this.physics.add.collider(this.knightM, wallsLayer);
 
-    // this.knightM.anims.play('knight_m_idle');
+    const lizardF = this.physics.add.sprite(
+      192,
+      48,
+      'lizard_f',
+      'lizard_f_idle_anim_f0.png'
+    );
+    lizardF.body.setSize(this.knightM.width * 0.7, this.knightM.height * 0.6);
+    lizardF.body.offset.y = 12;
+
+    lizardF.anims.play('lizard_f_idle');
 
     // to ensure things above player get loaded in last
     map.createLayer('Walls_Above', tileset);
