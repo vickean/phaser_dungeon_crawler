@@ -2,11 +2,15 @@ import Phaser from 'phaser';
 import { debugDraw } from '../utils/debug';
 import { createLizardAnims } from '../anims/EnemyAnims';
 import { createCharacterAnims } from '../anims/CharacterAnims';
+import Lizard from '../enemies/Lizard';
+import '../characters/KnightM';
 
 export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
     this.debugOn = false;
+    this.playerHit = false;
+    this.playerHitStartTime = 0;
   }
 
   preload() {
@@ -23,6 +27,7 @@ export default class Game extends Phaser.Scene {
     createLizardAnims(this.anims);
     createCharacterAnims(this.anims);
 
+    // map adding
     const map = this.make.tilemap({ key: 'dungeon' });
     const tileset = map.addTilesetImage('dungeon', 'tiles');
 
@@ -37,30 +42,31 @@ export default class Game extends Phaser.Scene {
       debugDraw(wallsLayer, this);
     }
 
-    this.knightM = this.physics.add.sprite(
-      64,
-      48,
-      'knight_m',
-      'knight_m_idle_anim_f0.png'
-    );
-    this.knightM.body.setSize(
-      this.knightM.width * 0.7,
-      this.knightM.height * 0.6
-    );
-    this.knightM.body.offset.y = 12;
+    this.knightM = this.add.knight_m(64, 48, 'knight_m');
 
+    // Lizard generation
+    const lizards = this.physics.add.group({
+      classType: Lizard,
+      createCallback: (child) => {
+        child.body.setSize(child.width * 0.7, child.height * 0.6);
+        child.body.offset.y = 12;
+        child.body.onCollide = true;
+      },
+    });
+
+    lizards.get(192, 48, 'lizard_f');
+    lizards.get(192, 80, 'lizard_f');
+
+    //colliders
     this.physics.add.collider(this.knightM, wallsLayer);
-
-    const lizardF = this.physics.add.sprite(
-      192,
-      48,
-      'lizard_f',
-      'lizard_f_idle_anim_f0.png'
+    this.physics.add.collider(lizards, wallsLayer);
+    this.physics.add.collider(
+      lizards,
+      this.knightM,
+      this.handlePlayerLizardCollision,
+      undefined,
+      this
     );
-    lizardF.body.setSize(this.knightM.width * 0.7, this.knightM.height * 0.6);
-    lizardF.body.offset.y = 12;
-
-    lizardF.anims.play('lizard_f_idle');
 
     // to ensure things above player get loaded in last
     map.createLayer('Walls_Above', tileset);
@@ -68,35 +74,35 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.knightM);
   }
 
+  handlePlayerLizardCollision(knight, lizard) {
+    // knckback if hit by lizard
+    this.playerHit = true;
+    const dx = this.knightM.x - lizard.x;
+    const dy = this.knightM.y - lizard.y;
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+
+    this.knightM.setVelocity(dir.x, dir.y);
+  }
+
   update(t, dt) {
-    if (!this.cursors || !this.knightM) {
+    if (this.playerHit) {
+      if (this.playerHitStartTime === 0) {
+        this.playerHitStartTime = t;
+      }
+      if (t - this.playerHitStartTime >= 100) {
+        this.playerHit = false;
+        this.playerHitStartTime = 0;
+        this.knightM.clearTint();
+        return;
+      }
+      this.knightM.anims.play('knight_m_hit', true);
+      this.knightM.setTint(0xff0000);
       return;
     }
 
-    const speed = 100;
-    if (this.cursors.left.isDown) {
-      this.knightM.anims.play('knight_m_run', true);
-      this.knightM.setVelocity(-speed, 0);
-
-      if (!this.knightM.flipX) {
-        this.knightM.toggleFlipX();
-      }
-    } else if (this.cursors.right.isDown) {
-      this.knightM.anims.play('knight_m_run', true);
-      this.knightM.setVelocity(speed, 0);
-
-      if (this.knightM.flipX) {
-        this.knightM.toggleFlipX();
-      }
-    } else if (this.cursors.up.isDown) {
-      this.knightM.anims.play('knight_m_run', true);
-      this.knightM.setVelocity(0, -speed);
-    } else if (this.cursors.down.isDown) {
-      this.knightM.anims.play('knight_m_run', true);
-      this.knightM.setVelocity(0, speed);
-    } else {
-      this.knightM.setVelocity(0, 0);
-      this.knightM.anims.play('knight_m_idle', true);
+    if (this.knightM) {
+      this.knightM.update(this.cursors);
+      return;
     }
   }
 }

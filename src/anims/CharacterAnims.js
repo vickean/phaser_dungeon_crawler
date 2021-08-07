@@ -24,6 +24,18 @@ const createCharacterAnims = (anims) => {
     repeat: -1,
     frameRate: 10,
   });
+
+  anims.create({
+    key: 'knight_m_hit',
+    frames: anims.generateFrameNames('knight_m', {
+      prefix: 'knight_m_hit_anim_f',
+      suffix: '.png',
+      start: 0,
+      end: 0,
+    }),
+    repeat: -1,
+    frameRate: 10,
+  });
 };
 
 export { createCharacterAnims };
