@@ -1,13 +1,75 @@
 import Phaser from 'phaser';
 
+const HealthState = {
+  IDLE: 0,
+  DAMAGE: 1,
+  DEAD: 2,
+};
+
 export default class KnightM extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, frame) {
     super(scene, x, y, texture, frame);
+    this.heathState = HealthState.IDLE;
+    this.damageTime = 0;
+    this._health = 3;
   }
 
-  handleDamage(dir) {}
+  get health() {
+    return this._health;
+  }
+
+  handleDamage(dir) {
+    if (this._health <= 0) {
+      return;
+    }
+
+    if (this.healthState === HealthState.DAMAGE) {
+      return;
+    }
+
+    --this._health;
+
+    if (this._health <= 0) {
+      this.healthState = HealthState.DEAD;
+      this.setTint(0x000000);
+      this.anims.stop();
+      this.setVelocity(0, 0);
+    } else {
+      this.setVelocity(dir.x, dir.y);
+
+      this.setTint(0xff0000);
+
+      this.healthState = HealthState.DAMAGE;
+      this.damageTime = 0;
+    }
+  }
+
+  preUpdate(t, dt) {
+    super.preUpdate(t, dt);
+
+    switch (this.healthState) {
+      case HealthState.IDLE:
+        break;
+
+      case HealthState.DAMAGE:
+        this.damageTime += dt;
+        if (this.damageTime >= 200) {
+          this.healthState = HealthState.IDLE;
+          this.clearTint();
+          this.damageTime = 0;
+        }
+        break;
+    }
+  }
 
   update(cursors) {
+    if (
+      this.healthState === HealthState.DAMAGE ||
+      this.healthState === HealthState.DEAD
+    ) {
+      return;
+    }
+
     if (!cursors) {
       return;
     }

@@ -2,15 +2,14 @@ import Phaser from 'phaser';
 import { debugDraw } from '../utils/debug';
 import { createLizardAnims } from '../anims/EnemyAnims';
 import { createCharacterAnims } from '../anims/CharacterAnims';
-import Lizard from '../enemies/Lizard';
 import '../characters/KnightM';
+import '../enemies/LizardF';
+import { sceneEvents } from '../events/EventCenter';
 
 export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
     this.debugOn = false;
-    this.playerHit = false;
-    this.playerHitStartTime = 0;
   }
 
   preload() {
@@ -23,6 +22,9 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    // run UI scene alongside Game scene
+    this.scene.run('game-ui');
+
     // create anims
     createLizardAnims(this.anims);
     createCharacterAnims(this.anims);
@@ -45,22 +47,19 @@ export default class Game extends Phaser.Scene {
     this.knightM = this.add.knight_m(64, 48, 'knight_m');
 
     // Lizard generation
-    const lizards = this.physics.add.group({
-      classType: Lizard,
-      createCallback: (child) => {
-        child.body.setSize(child.width * 0.7, child.height * 0.6);
-        child.body.offset.y = 12;
-        child.body.onCollide = true;
-      },
-    });
-
-    lizards.get(192, 48, 'lizard_f');
-    lizards.get(192, 80, 'lizard_f');
+    const lizards = this.physics.add.group();
+    lizards.addMultiple(
+      [
+        this.add.lizard_f(192, 48, 'lizard_f'),
+        this.add.lizard_f(192, 80, 'lizard_f'),
+      ],
+      true
+    );
 
     //colliders
     this.physics.add.collider(this.knightM, wallsLayer);
     this.physics.add.collider(lizards, wallsLayer);
-    this.physics.add.collider(
+    this.playerLizardsCollider = this.physics.add.collider(
       lizards,
       this.knightM,
       this.handlePlayerLizardCollision,
@@ -76,30 +75,20 @@ export default class Game extends Phaser.Scene {
 
   handlePlayerLizardCollision(knight, lizard) {
     // knckback if hit by lizard
-    this.playerHit = true;
     const dx = this.knightM.x - lizard.x;
     const dy = this.knightM.y - lizard.y;
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
-    this.knightM.setVelocity(dir.x, dir.y);
+    this.knightM.handleDamage(dir);
+
+    sceneEvents.emit('player-health-changed', this.knightM.health);
+
+    if (this.knightM.health <= 0) {
+      this.playerLizardsCollider.destroy();
+    }
   }
 
   update(t, dt) {
-    if (this.playerHit) {
-      if (this.playerHitStartTime === 0) {
-        this.playerHitStartTime = t;
-      }
-      if (t - this.playerHitStartTime >= 100) {
-        this.playerHit = false;
-        this.playerHitStartTime = 0;
-        this.knightM.clearTint();
-        return;
-      }
-      this.knightM.anims.play('knight_m_hit', true);
-      this.knightM.setTint(0xff0000);
-      return;
-    }
-
     if (this.knightM) {
       this.knightM.update(this.cursors);
       return;
