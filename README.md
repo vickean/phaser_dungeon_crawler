@@ -26,4 +26,4 @@ Use `yarn serve` to run locally.
 
 TODO:
 
-1. continue from [3:35](https://www.youtube.com/watch?v=An_JEqUB4l0&ab_channel=Ourcade)
+1. continue [here](https://www.youtube.com/watch?v=a3d36lpw7nY&ab_channel=Ourcade).

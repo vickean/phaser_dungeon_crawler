@@ -13,6 +13,10 @@ const Direction = {
   RIGHT: 3,
 };
 
+const setRotation = (go, degree) => {
+  go.setRotation(Phaser.Math.DegToRad(degree));
+};
+
 export default class KnightM extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, frame) {
     super(scene, x, y, texture, frame);
@@ -30,6 +34,10 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     this.knives = knives;
   }
 
+  setDirIndicator(indicator) {
+    this.dirIndicator = indicator;
+  }
+
   handleDamage(dir) {
     if (this._health <= 0) {
       return;
@@ -42,10 +50,12 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     --this._health;
 
     if (this._health <= 0) {
+      // if dead
       this.healthState = HealthState.DEAD;
       this.setTint(0x000000);
       this.anims.stop();
       this.setVelocity(0, 0);
+      this.dirIndicator.setVisible(false);
     } else {
       this.setVelocity(dir.x, dir.y);
 
@@ -89,10 +99,53 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
 
     knife.setRotation(angle);
 
-    knife.x += vec.x * 8;
-    knife.y += vec.y * 8;
+    knife.x += vec.x * 16;
+    knife.y += (vec.y || 1) * (vec.y === 1 ? 18 : 8);
 
     knife.setVelocity(vec.x * 300, vec.y * 300);
+  }
+
+  setDirArrowPosition() {
+    //set this.dirIndicator position based on this.lastDir
+    const vec = new Phaser.Math.Vector2(this.x, this.y);
+
+    switch (this.lastDir) {
+      case Direction.UP:
+        if (!this.dirIndicator.flipX) {
+          setRotation(this.dirIndicator, 270);
+        } else {
+          setRotation(this.dirIndicator, 90);
+        }
+        vec.y -= 8;
+        break;
+      case Direction.DOWN:
+        if (this.dirIndicator.flipX) {
+          setRotation(this.dirIndicator, 270);
+        } else {
+          setRotation(this.dirIndicator, 90);
+        }
+        vec.y += 10;
+        break;
+      case Direction.LEFT:
+        setRotation(this.dirIndicator, 0);
+        if (!this.dirIndicator.flipX) {
+          this.dirIndicator.toggleFlipX();
+        }
+        vec.x -= 4;
+        vec.y += 9;
+        break;
+      case Direction.RIGHT:
+        setRotation(this.dirIndicator, 0);
+        if (this.dirIndicator.flipX) {
+          this.dirIndicator.toggleFlipX();
+        }
+        vec.x += 4;
+        vec.y += 9;
+        break;
+    }
+
+    this.dirIndicator.x = vec.x;
+    this.dirIndicator.y = vec.y;
   }
 
   preUpdate(t, dt) {
@@ -111,6 +164,8 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
         }
         break;
     }
+
+    this.setDirArrowPosition();
   }
 
   update(cursors) {
@@ -177,6 +232,10 @@ Phaser.GameObjects.GameObjectFactory.register(
 
     sprite.body.setSize(sprite.width * 0.7, sprite.height * 0.6);
     sprite.body.offset.y = 12;
+
+    // add direction indicator
+    const dirArrow = this.scene.add.sprite(x, y, 'weapon-knife');
+    sprite.setDirIndicator(dirArrow);
 
     return sprite;
   }

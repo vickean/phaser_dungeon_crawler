@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import { sceneEvents } from '../events/EventCenter';
+
 const Direction = {
   UP: 0,
   DOWN: 1,
@@ -34,10 +36,22 @@ export default class LizardF extends Phaser.Physics.Arcade.Sprite {
       },
       loop: true,
     });
+
+    this.dead = false;
+  }
+
+  killed() {
+    this.dead = true;
+    this.anims.stop();
+    this.setTint(0xff0000);
   }
 
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
+
+    if (this.dead) {
+      return;
+    }
 
     const speed = 50;
 

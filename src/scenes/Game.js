@@ -100,8 +100,15 @@ export default class Game extends Phaser.Scene {
 
   handleKnifeLizardCollision(knife, lizard) {
     knife.disableBody(true, true);
-    lizard.disableBody(true, true);
-    // TODO: death animation for lizard
+    lizard.killed();
+    this.time.delayedCall(
+      300,
+      () => {
+        lizard.disableBody(true, true);
+      },
+      undefined,
+      this
+    );
   }
 
   handlePlayerLizardCollision(knight, lizard) {
