@@ -44,11 +44,18 @@ export default class Game extends Phaser.Scene {
       debugDraw(wallsLayer, this);
     }
 
+    // Knives
+    this.knives = this.physics.add.group({
+      classType: Phaser.Physics.Arcade.Image,
+    });
+
+    // add player
     this.knightM = this.add.knight_m(64, 48, 'knight_m');
+    this.knightM.setKnives(this.knives);
 
     // Lizard generation
-    const lizards = this.physics.add.group();
-    lizards.addMultiple(
+    this.lizards = this.physics.add.group();
+    this.lizards.addMultiple(
       [
         this.add.lizard_f(192, 48, 'lizard_f'),
         this.add.lizard_f(192, 80, 'lizard_f'),
@@ -58,11 +65,25 @@ export default class Game extends Phaser.Scene {
 
     //colliders
     this.physics.add.collider(this.knightM, wallsLayer);
-    this.physics.add.collider(lizards, wallsLayer);
+    this.physics.add.collider(this.lizards, wallsLayer);
     this.playerLizardsCollider = this.physics.add.collider(
-      lizards,
+      this.lizards,
       this.knightM,
       this.handlePlayerLizardCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      wallsLayer,
+      this.handleKnifeWallCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.lizards,
+      this.handleKnifeLizardCollision,
       undefined,
       this
     );
@@ -71,6 +92,16 @@ export default class Game extends Phaser.Scene {
     map.createLayer('Walls_Above', tileset);
 
     this.cameras.main.startFollow(this.knightM);
+  }
+
+  handleKnifeWallCollision(knife, wall) {
+    knife.disableBody(true, true);
+  }
+
+  handleKnifeLizardCollision(knife, lizard) {
+    knife.disableBody(true, true);
+    lizard.disableBody(true, true);
+    // TODO: death animation for lizard
   }
 
   handlePlayerLizardCollision(knight, lizard) {

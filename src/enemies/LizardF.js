@@ -97,6 +97,8 @@ Phaser.GameObjects.GameObjectFactory.register(
       Phaser.Physics.Arcade.DYNAMIC_BODY
     );
 
+    sprite.enableBody(true, x, y, true, true);
+
     sprite.body.setSize(sprite.width * 0.7, sprite.height * 0.6);
     sprite.body.offset.y = 12;
     sprite.body.onCollide = true;

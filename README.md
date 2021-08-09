@@ -23,3 +23,7 @@ Notes:
 5. Use `file-loader` in webpack.config.js to serve static images.
 
 Use `yarn serve` to run locally.
+
+TODO:
+
+1. continue from [3:35](https://www.youtube.com/watch?v=An_JEqUB4l0&ab_channel=Ourcade)

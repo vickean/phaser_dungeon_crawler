@@ -8,6 +8,7 @@ import lizardF from '../../assets/enemies/lizard_f.png';
 import lizardFJson from '../../assets/enemies/lizard_f.json';
 import heartEmpty from '../../assets/ui/ui_heart_empty.png';
 import heartFull from '../../assets/ui/ui_heart_full.png';
+import weaponKnife from '../../assets/weapons/weapon_knife.png';
 
 export default class Preloader extends Phaser.Scene {
   constructor() {
@@ -23,6 +24,8 @@ export default class Preloader extends Phaser.Scene {
 
     this.load.image('ui-heart-empty', heartEmpty);
     this.load.image('ui-heart-full', heartFull);
+
+    this.load.image('weapon-knife', weaponKnife);
   }
 
   create() {
