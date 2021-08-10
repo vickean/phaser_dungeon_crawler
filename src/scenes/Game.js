@@ -65,6 +65,7 @@ export default class Game extends Phaser.Scene {
 
     //colliders
     this.physics.add.collider(this.knightM, wallsLayer);
+    this.physics.add.collider(this.knightM.dirIndicator, wallsLayer);
     this.physics.add.collider(this.lizards, wallsLayer);
     this.playerLizardsCollider = this.physics.add.collider(
       this.lizards,

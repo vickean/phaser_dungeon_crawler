@@ -116,7 +116,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
         } else {
           setRotation(this.dirIndicator, 90);
         }
-        vec.y -= 8;
+        vec.y += 0;
         break;
       case Direction.DOWN:
         if (this.dirIndicator.flipX) {
@@ -124,7 +124,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
         } else {
           setRotation(this.dirIndicator, 90);
         }
-        vec.y += 10;
+        vec.y += 14;
         break;
       case Direction.LEFT:
         setRotation(this.dirIndicator, 0);
@@ -234,7 +234,7 @@ Phaser.GameObjects.GameObjectFactory.register(
     sprite.body.offset.y = 12;
 
     // add direction indicator
-    const dirArrow = this.scene.add.sprite(x, y, 'weapon-knife');
+    const dirArrow = this.scene.add.sprite(x + 4, y + 9, 'weapon-knife');
     sprite.setDirIndicator(dirArrow);
 
     return sprite;
