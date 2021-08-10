@@ -9,6 +9,8 @@ import lizardFJson from '../../assets/enemies/lizard_f.json';
 import heartEmpty from '../../assets/ui/ui_heart_empty.png';
 import heartFull from '../../assets/ui/ui_heart_full.png';
 import weaponKnife from '../../assets/weapons/weapon_knife.png';
+import treasure from '../../assets/items/treasure.png';
+import treasureJson from '../../assets/items/treasure.json';
 
 export default class Preloader extends Phaser.Scene {
   constructor() {
@@ -21,6 +23,7 @@ export default class Preloader extends Phaser.Scene {
 
     this.load.atlas('knight_m', knightM, knightMJson);
     this.load.atlas('lizard_f', lizardF, lizardFJson);
+    this.load.atlas('treasure', treasure, treasureJson);
 
     this.load.image('ui-heart-empty', heartEmpty);
     this.load.image('ui-heart-full', heartFull);

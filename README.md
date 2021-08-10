@@ -14,7 +14,7 @@ Assets credits:
 
 - [Dungeon Tileset II - 0x72](https://0x72.itch.io/dungeontileset-ii)
 
-Notes:
+Setup:
 
 1. `yarn add webpack webpack-cli -D` to install webpack.
 2. `npx webpack-cli init` to initialize webpack.
@@ -24,6 +24,11 @@ Notes:
 
 Use `yarn serve` to run locally.
 
+Notes:
+
+1. For bottom walls add to the wall_above layer on top as a mask to hide objects like the character weapon that exceeds the character physics body box when it extends pass the walls.
+
 TODO:
 
-1. continue [here](https://www.youtube.com/watch?v=a3d36lpw7nY&ab_channel=Ourcade).
+1. continue [13:37](https://www.youtube.com/watch?v=a3d36lpw7nY&ab_channel=Ourcade).
+2. change string references to consts.

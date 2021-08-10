@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { debugDraw } from '../utils/debug';
 import { createLizardAnims } from '../anims/EnemyAnims';
 import { createCharacterAnims } from '../anims/CharacterAnims';
+import { createChestAnims } from '../anims/TreasureAnims';
 import '../characters/KnightM';
 import '../enemies/LizardF';
 import { sceneEvents } from '../events/EventCenter';
@@ -34,6 +35,7 @@ export default class Game extends Phaser.Scene {
     // create anims
     createLizardAnims(this.anims);
     createCharacterAnims(this.anims);
+    createChestAnims(this.anims);
 
     // map adding
     const map = this.make.tilemap({ key: 'dungeon' });
@@ -42,6 +44,17 @@ export default class Game extends Phaser.Scene {
     map.createLayer('Ground', tileset);
     map.createLayer('Walls_Below', tileset);
     const wallsLayer = map.createLayer('Walls_Collide', tileset);
+
+    const chests = this.physics.add.staticGroup();
+    const chestsLayer = map.getObjectLayer('Chests');
+    chestsLayer.objects.forEach((chestObj) => {
+      chests.get(
+        chestObj.x + chestObj.width * 0.5, // compensate for Tiled origin being in Top Right
+        chestObj.y - chestObj.height * 0.5, // and Phaser3 being center of object
+        'treasure',
+        'chest_empty_open_anim_f0.png'
+      );
+    });
 
     wallsLayer.setCollisionByProperty({ collides: true });
 
@@ -71,6 +84,7 @@ export default class Game extends Phaser.Scene {
 
     //colliders
     this.physics.add.collider(this.knightM, wallsLayer);
+    this.physics.add.collider(this.knightM, chests);
     this.physics.add.collider(this.knightM.dirIndicator, wallsLayer);
     this.physics.add.collider(this.lizards, wallsLayer);
     this.playerLizardsCollider = this.physics.add.collider(
@@ -106,8 +120,10 @@ export default class Game extends Phaser.Scene {
   }
 
   handleKnifeLizardCollision(knife, lizard) {
+    lizard.body.setSize(0.5, 0.5);
     knife.disableBody(true, true);
     lizard.killed();
+
     this.time.delayedCall(
       300,
       () => {

@@ -32,10 +32,57 @@
          "height":25,
          "id":2,
          "name":"Walls_Collide",
-         "opacity":0.93,
+         "opacity":1,
          "type":"tilelayer",
          "visible":true,
          "width":25,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"Chests",
+         "objects":[
+                {
+                 "gid":273,
+                 "height":16,
+                 "id":7,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":64
+                }, 
+                {
+                 "gid":273,
+                 "height":16,
+                 "id":8,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":208,
+                 "y":192
+                }, 
+                {
+                 "gid":273,
+                 "height":16,
+                 "id":9,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":64,
+                 "y":192
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -52,8 +99,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":5,
- "nextobjectid":1,
+ "nextlayerid":6,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.1",
@@ -2519,6 +2566,19 @@
                          "value":true
                         }]
                 }],
+         "tilewidth":16
+        }, 
+        {
+         "columns":3,
+         "firstgid":273,
+         "image":"..\/tiles\/chest_tileset.png",
+         "imageheight":16,
+         "imagewidth":48,
+         "margin":0,
+         "name":"chest",
+         "spacing":0,
+         "tilecount":3,
+         "tileheight":16,
          "tilewidth":16
         }],
  "tilewidth":16,

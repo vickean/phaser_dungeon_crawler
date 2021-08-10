@@ -1,0 +1,166 @@
+{
+	"textures": [
+		{
+			"image": "treasure",
+			"format": "RGBA8888",
+			"size": {
+				"w": 64,
+				"h": 16
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "chest_empty_open_anim_f2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					}
+				},
+				{
+					"filename": "chest_empty_open_anim_f1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 16,
+						"h": 15
+					},
+					"frame": {
+						"x": 16,
+						"y": 0,
+						"w": 16,
+						"h": 15
+					}
+				},
+				{
+					"filename": "chest_empty_open_anim_f0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 2,
+						"w": 16,
+						"h": 14
+					},
+					"frame": {
+						"x": 32,
+						"y": 0,
+						"w": 16,
+						"h": 14
+					}
+				},
+				{
+					"filename": "coin_anim_f0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 8,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 6,
+						"h": 7
+					},
+					"frame": {
+						"x": 48,
+						"y": 0,
+						"w": 6,
+						"h": 7
+					}
+				},
+				{
+					"filename": "coin_anim_f1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 8,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 1,
+						"w": 4,
+						"h": 7
+					},
+					"frame": {
+						"x": 54,
+						"y": 0,
+						"w": 4,
+						"h": 7
+					}
+				},
+				{
+					"filename": "coin_anim_f3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 8,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 1,
+						"w": 4,
+						"h": 7
+					},
+					"frame": {
+						"x": 58,
+						"y": 0,
+						"w": 4,
+						"h": 7
+					}
+				},
+				{
+					"filename": "coin_anim_f2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 8,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 1,
+						"w": 2,
+						"h": 7
+					},
+					"frame": {
+						"x": 62,
+						"y": 0,
+						"w": 2,
+						"h": 7
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}

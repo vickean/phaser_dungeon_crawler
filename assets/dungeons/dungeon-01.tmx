@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.1" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.1" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="10">
  <editorsettings>
-  <export target="dungeon-01." format="json"/>
+  <export target="dungeon-01.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16" tilecount="272" columns="16">
   <image source="../tiles/0x72_DungeonTilesetII_v1.4_ structures2.png" width="256" height="272"/>
@@ -1366,6 +1366,9 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="273" name="chest" tilewidth="16" tileheight="16" tilecount="3" columns="3">
+  <image source="../tiles/chest_tileset.png" width="48" height="16"/>
+ </tileset>
  <layer id="4" name="Ground" width="25" height="25">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1424,7 +1427,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="Walls_Collide" width="25" height="25" opacity="0.93">
+ <layer id="2" name="Walls_Collide" width="25" height="25">
   <data encoding="csv">
 0,0,0,219,220,0,0,0,0,0,121,11,11,11,11,11,11,11,11,122,121,11,11,122,0,
 121,11,234,235,236,237,11,11,11,122,137,0,0,0,0,0,0,0,0,138,137,0,0,138,0,
@@ -1453,6 +1456,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="5" name="Chests">
+  <object id="7" gid="273" x="96" y="64" width="16" height="16"/>
+  <object id="8" gid="273" x="208" y="192" width="16" height="16"/>
+  <object id="9" gid="273" x="64" y="192" width="16" height="16"/>
+ </objectgroup>
  <layer id="3" name="Walls_Above" width="25" height="25" tintcolor="#ff0000">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
