@@ -14,6 +14,12 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.wasd = this.input.keyboard.addKeys({
+      up: Phaser.Input.Keyboard.KeyCodes.W,
+      left: Phaser.Input.Keyboard.KeyCodes.A,
+      down: Phaser.Input.Keyboard.KeyCodes.S,
+      right: Phaser.Input.Keyboard.KeyCodes.D,
+    });
 
     // sets debugOn based on debug setting in main Phaser config
     if (this.game) {
@@ -129,7 +135,7 @@ export default class Game extends Phaser.Scene {
 
   update(t, dt) {
     if (this.knightM) {
-      this.knightM.update(this.cursors);
+      this.knightM.update(this.cursors, this.wasd);
       return;
     }
   }

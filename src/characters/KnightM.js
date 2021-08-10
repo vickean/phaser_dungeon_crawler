@@ -168,7 +168,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     this.setDirArrowPosition();
   }
 
-  update(cursors) {
+  update(cursors, wasd) {
     if (
       this.healthState === HealthState.DAMAGE ||
       this.healthState === HealthState.DEAD
@@ -186,7 +186,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     }
 
     const speed = 100;
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown || wasd.left.isDown) {
       this.lastDir = Direction.LEFT;
       this.anims.play('knight_m_run', true);
       this.setVelocity(-speed, 0);
@@ -194,7 +194,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
       if (!this.flipX) {
         this.toggleFlipX();
       }
-    } else if (cursors.right.isDown) {
+    } else if (cursors.right.isDown || wasd.right.isDown) {
       this.lastDir = Direction.RIGHT;
       this.anims.play('knight_m_run', true);
       this.setVelocity(speed, 0);
@@ -202,11 +202,11 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
       if (this.flipX) {
         this.toggleFlipX();
       }
-    } else if (cursors.up.isDown) {
+    } else if (cursors.up.isDown || wasd.up.isDown) {
       this.lastDir = Direction.UP;
       this.anims.play('knight_m_run', true);
       this.setVelocity(0, -speed);
-    } else if (cursors.down.isDown) {
+    } else if (cursors.down.isDown || wasd.down.isDown) {
       this.lastDir = Direction.DOWN;
       this.anims.play('knight_m_run', true);
       this.setVelocity(0, speed);
