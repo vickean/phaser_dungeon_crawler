@@ -8,6 +8,19 @@ export default class GameUI extends Phaser.Scene {
   }
 
   create() {
+    const coinsIcon = this.add.sprite(6, 26, 'treasure', 'coin_anim_f0.png');
+    coinsIcon.play('coin-rotate');
+
+    const coinsLabel = this.add.text(12, 20, '0', {
+      fontSize: '14',
+    });
+
+    console.log(coinsLabel);
+
+    sceneEvents.on('player-coins-changed', (coins) => {
+      coinsLabel.text = coins.toLocaleString();
+    });
+
     this.hearts = this.add.group({
       classType: Phaser.GameObjects.Image,
     });
@@ -34,6 +47,7 @@ export default class GameUI extends Phaser.Scene {
         this.handlePlayerHealthChanged,
         this
       );
+      sceneEvents.off('player-coins-changed');
     });
   }
 

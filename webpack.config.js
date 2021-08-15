@@ -43,7 +43,7 @@ const config = {
         use: [stylesHandler, 'css-loader'],
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+        test: /\.(svg|png|jpg|gif)$/i,
         use: [
           {
             loader: 'file-loader',
@@ -52,6 +52,10 @@ const config = {
             },
           },
         ],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
       },
 
       // Add your rules for custom modules here

@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import { sceneEvents } from '../events/EventCenter';
+
 const HealthState = {
   IDLE: 0,
   DAMAGE: 1,
@@ -23,6 +25,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     this.heathState = HealthState.IDLE;
     this.damageTime = 0;
     this._health = 3;
+    this._coins = 0;
     this.lastDir = Direction.RIGHT;
   }
 
@@ -36,6 +39,10 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
 
   setDirIndicator(indicator) {
     this.dirIndicator = indicator;
+  }
+
+  setChest(chest) {
+    this.activeChest = chest;
   }
 
   handleDamage(dir) {
@@ -181,12 +188,25 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (Phaser.Input.Keyboard.JustDown(cursors.space)) {
-      this.throwKnife();
+      if (this.activeChest) {
+        const coins = this.activeChest.open();
+        this._coins += coins;
+
+        sceneEvents.emit('player-coins-changed', this._coins);
+      } else {
+        this.throwKnife();
+      }
       return;
     }
 
     const speed = 100;
-    if (cursors.left.isDown || wasd.left.isDown) {
+
+    const leftDown = cursors.left.isDown || wasd.left.isDown;
+    const rightDown = cursors.right.isDown || wasd.right.isDown;
+    const upDown = cursors.up.isDown || wasd.up.isDown;
+    const downDown = cursors.down.isDown || wasd.down.isDown;
+
+    if (leftDown) {
       this.lastDir = Direction.LEFT;
       this.anims.play('knight_m_run', true);
       this.setVelocity(-speed, 0);
@@ -194,7 +214,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
       if (!this.flipX) {
         this.toggleFlipX();
       }
-    } else if (cursors.right.isDown || wasd.right.isDown) {
+    } else if (rightDown) {
       this.lastDir = Direction.RIGHT;
       this.anims.play('knight_m_run', true);
       this.setVelocity(speed, 0);
@@ -202,17 +222,21 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
       if (this.flipX) {
         this.toggleFlipX();
       }
-    } else if (cursors.up.isDown || wasd.up.isDown) {
+    } else if (upDown) {
       this.lastDir = Direction.UP;
       this.anims.play('knight_m_run', true);
       this.setVelocity(0, -speed);
-    } else if (cursors.down.isDown || wasd.down.isDown) {
+    } else if (downDown) {
       this.lastDir = Direction.DOWN;
       this.anims.play('knight_m_run', true);
       this.setVelocity(0, speed);
     } else {
       this.setVelocity(0, 0);
       this.anims.play('knight_m_idle', true);
+    }
+
+    if (leftDown || rightDown || upDown || leftDown) {
+      this.activeChest = undefined;
     }
   }
 }
