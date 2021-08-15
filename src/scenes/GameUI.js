@@ -9,13 +9,12 @@ export default class GameUI extends Phaser.Scene {
 
   create() {
     const coinsIcon = this.add.sprite(6, 29, 'treasure', 'coin_anim_f0.png');
-    coinsIcon.setScale(1.3);
     coinsIcon.play('coin-rotate');
 
     const coinsLabel = this.add.text(12, 20, '0', {
       fontSize: '18px',
       fontFamily: 'Abaddon-Bold',
-      resolution: 5,
+      resolution: 100,
     });
 
     sceneEvents.on('player-coins-changed', (coins) => {
