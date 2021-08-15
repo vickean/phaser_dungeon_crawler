@@ -9,7 +9,7 @@ const createChestAnims = (anims) => {
       start: 0,
       end: 2,
     }),
-    frameRate: 5,
+    frameRate: 10,
   });
 
   anims.create({
@@ -25,7 +25,7 @@ const createChestAnims = (anims) => {
       start: 0,
       end: 3,
     }),
-    frameRate: 5,
+    frameRate: 10,
     repeat: -1,
   });
 };

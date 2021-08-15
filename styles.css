@@ -12,3 +12,8 @@ canvas {
   margin-top: 0;
   margin-left: 0;
 }
+
+@font-face {
+  font-family: 'Abaddon-Bold';
+  src: url('./assets/fonts/Abaddon-Bold.woff') format('woff');
+}
