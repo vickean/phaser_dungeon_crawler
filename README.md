@@ -1,5 +1,7 @@
 # Phaser 3 Dungeon Crawler Tutorial
 
+[TRY IT HERE!](https://gifted-keller-010eef.netlify.app/)
+
 Learning how to use Phaser 3 to build an RPG dungeon crawler.
 Based on tutorial series on Ourcade by Tommy Leung aka [@supertommy](https://github.com/supertommy).
 
@@ -9,6 +11,7 @@ Tools:
 
 - [Tiled - tilemap editor](https://www.mapeditor.org/)
 - [Free Texture Packer](https://free-tex-packer.com/app/)
+- [Bitmap Font Generator Online - SnowB BMF](https://snowb.org/)
 
 Assets credits:
 
@@ -34,3 +37,4 @@ TODO:
 1. continue [04:21](https://www.youtube.com/watch?v=34zzX8gLGSk&ab_channel=Ourcade).
 2. change string references to consts.
 3. Implement restart mechanics.
+4. Improve speech system.
