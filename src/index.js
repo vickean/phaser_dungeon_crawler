@@ -24,4 +24,5 @@ export default new Phaser.Game({
     width: 400,
     height: 250,
   },
+  pixelArt: true,
 });

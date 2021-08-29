@@ -31,5 +31,6 @@ Notes:
 
 TODO:
 
-1. continue [13:37](https://www.youtube.com/watch?v=a3d36lpw7nY&ab_channel=Ourcade).
+1. continue [04:21](https://www.youtube.com/watch?v=34zzX8gLGSk&ab_channel=Ourcade).
 2. change string references to consts.
+3. Implement restart mechanics.

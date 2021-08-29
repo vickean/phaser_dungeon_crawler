@@ -11,6 +11,8 @@ import heartFull from '../../assets/ui/ui_heart_full.png';
 import weaponKnife from '../../assets/weapons/weapon_knife.png';
 import treasure from '../../assets/items/treasure.png';
 import treasureJson from '../../assets/items/treasure.json';
+import abaddonTex from '../../assets/fonts/Abaddon-Bold.png';
+import abaddonXml from '../../assets/fonts/Abaddon-Bold.xml';
 
 export default class Preloader extends Phaser.Scene {
   constructor() {
@@ -29,6 +31,8 @@ export default class Preloader extends Phaser.Scene {
     this.load.image('ui-heart-full', heartFull);
 
     this.load.image('weapon-knife', weaponKnife);
+
+    this.load.bitmapFont('abaddon-bold', abaddonTex, abaddonXml);
   }
 
   create() {

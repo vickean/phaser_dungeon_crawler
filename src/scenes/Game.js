@@ -121,6 +121,7 @@ export default class Game extends Phaser.Scene {
     map.createLayer('Walls_Above', tileset);
 
     this.cameras.main.startFollow(this.knightM);
+    this.cameras.main.setRoundPixels(true);
   }
 
   handlePlayerChestCollision(player, chest) {
@@ -147,6 +148,7 @@ export default class Game extends Phaser.Scene {
   }
 
   handlePlayerLizardCollision(knight, lizard) {
+    this.cameras.main.shake();
     // knckback if hit by lizard
     const dx = this.knightM.x - lizard.x;
     const dy = this.knightM.y - lizard.y;

@@ -43,7 +43,7 @@ const config = {
         use: [stylesHandler, 'css-loader'],
       },
       {
-        test: /\.(svg|png|jpg|gif)$/i,
+        test: /\.(svg|png|jpg|gif|xml)$/i,
         use: [
           {
             loader: 'file-loader',
