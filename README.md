@@ -38,3 +38,7 @@ TODO:
 2. change string references to consts.
 3. Implement restart mechanics.
 4. Improve speech system.
+5. Touch controls.
+6. Add timer.
+7. Add end state.
+8. Add local high score.

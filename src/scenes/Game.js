@@ -122,6 +122,7 @@ export default class Game extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.knightM);
     this.cameras.main.setRoundPixels(true);
+    this.cameras.main.fadeIn(2000);
   }
 
   handlePlayerChestCollision(player, chest) {
@@ -159,13 +160,14 @@ export default class Game extends Phaser.Scene {
     sceneEvents.emit('player-health-changed', this.knightM.health);
 
     if (this.knightM.health <= 0) {
+      this.cameras.main.fadeOut(2000);
       this.playerLizardsCollider.destroy();
     }
   }
 
   update(t, dt) {
     if (this.knightM) {
-      this.knightM.update(this.cursors, this.wasd);
+      this.knightM.update(this.cursors, this.wasd, t, dt, this);
       return;
     }
   }

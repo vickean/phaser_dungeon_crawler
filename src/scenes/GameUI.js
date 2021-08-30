@@ -5,13 +5,15 @@ import { sceneEvents } from '../events/EventCenter';
 export default class GameUI extends Phaser.Scene {
   constructor() {
     super('game-ui');
-
-    this.speech_lasttime = 0;
-    this.speech_lastphrase = '';
   }
 
   create() {
     let { width, height } = this.sys.game.canvas;
+
+    //placed here to refresh after restart
+    this.speech_lasttime = 0;
+    this.speech_lastphrase = '';
+    this.speech_init = true;
 
     const coinsIcon = this.add.sprite(6, 29, 'treasure', 'coin_anim_f0.png');
     coinsIcon.play('coin-rotate');
@@ -26,17 +28,25 @@ export default class GameUI extends Phaser.Scene {
     coinsLabel.setLetterSpacing(2);
     coinsLabel.setScale(0.6);
 
-    this.speech = this.add.bitmapText(
-      width / 2,
-      height - 20,
-      'abaddon-bold',
-      'Hello there my scaly friends!',
-      30
-    );
-    this.speech.setTintFill(0xffffff);
-    this.speech.setLetterSpacing(2);
-    this.speech.setScale(0.5);
-    this.speech.setOrigin(0.5);
+    this.speech = this.add
+      .bitmapText(width / 2, height - 20, 'abaddon-bold', '', 30)
+      .setTintFill(0xffffff)
+      .setLetterSpacing(2)
+      .setScale(0.5)
+      .setOrigin(0.5);
+
+    this.youDied = this.add
+      .bitmapText(width / 2, height / 2, 'abaddon-bold', '', 60)
+      .setTintFill(0xff0000)
+      .setLetterSpacing(2)
+      .setOrigin(0.5);
+
+    this.pressToRestart = this.add
+      .bitmapText(width / 2, this.youDied.y + 30, 'abaddon-bold', '', 30)
+      .setTintFill(0xffffff)
+      .setLetterSpacing(2)
+      .setScale(0.5)
+      .setOrigin(0.5);
 
     sceneEvents.on('player-coins-changed', (coins) => {
       coinsLabel.text = coins.toLocaleString();
@@ -73,16 +83,22 @@ export default class GameUI extends Phaser.Scene {
   }
 
   update(t, dt) {
-    // console.log(t);
+    // console.log(t, this.speech_lasttime);
     if (this.speech_lasttime === 0) {
       this.speech_lasttime = t;
     }
 
+    // might have performance impact have to revise
     if (t - this.speech_lasttime >= 1500) {
       const lastText = this.speech.text;
       this.speech.setText('');
       this.speech_lasttime = 0;
       this.speech_lastphrase = lastText;
+    }
+
+    if (t - this.speech_lasttime >= 1600 && this.speech_init) {
+      this.speech.setText('Hello there my scaly friends!');
+      this.speech_init = false;
     }
 
     if (
@@ -111,5 +127,12 @@ export default class GameUI extends Phaser.Scene {
         heart.setTexture('ui-heart-empty');
       }
     });
+
+    if (health <= 0) {
+      this.youDied.setText('YOU DIED');
+      this.time.delayedCall(2500, () => {
+        this.pressToRestart.setText('press SPACE to restart');
+      });
+    }
   }
 }

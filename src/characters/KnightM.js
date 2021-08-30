@@ -27,6 +27,7 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     this._health = 3;
     this._coins = 0;
     this.lastDir = Direction.RIGHT;
+    this.timeofDeath = 0;
   }
 
   get health() {
@@ -175,7 +176,17 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
     this.setDirArrowPosition();
   }
 
-  update(cursors, wasd) {
+  update(cursors, wasd, t, dt, scene) {
+    if (this.healthState === HealthState.DEAD) {
+      if (this.timeofDeath === 0) {
+        this.timeofDeath = t;
+      } else if (t - this.timeofDeath >= 2500) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.space)) {
+          scene.scene.restart();
+        }
+      }
+    }
+
     if (
       this.healthState === HealthState.DAMAGE ||
       this.healthState === HealthState.DEAD
