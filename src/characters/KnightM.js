@@ -98,6 +98,11 @@ export default class KnightM extends Phaser.Physics.Arcade.Sprite {
 
     const angle = vec.angle();
     const knife = this.knives.get(this.x, this.y, 'weapon-knife');
+
+    if (!knife) {
+      return;
+    }
+
     if (vec.y !== 0) {
       knife.body.setSize(knife.height, knife.width);
     } else {

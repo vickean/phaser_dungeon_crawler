@@ -34,11 +34,10 @@ Notes:
 
 TODO:
 
-1. continue [04:21](https://www.youtube.com/watch?v=34zzX8gLGSk&ab_channel=Ourcade).
-2. change string references to consts.
-3. Implement restart mechanics.
-4. Improve speech system.
-5. Touch controls.
-6. Add timer.
-7. Add end state.
-8. Add local high score.
+1. change string references to consts.
+2. Implement restart mechanics.
+3. Improve speech system.
+4. Touch controls.
+5. Add timer.
+6. Add end state.
+7. Add local high score.

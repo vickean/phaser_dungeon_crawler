@@ -7,6 +7,7 @@ import '../characters/KnightM';
 import '../enemies/LizardF';
 import { sceneEvents } from '../events/EventCenter';
 import Chest from '../items/Chest';
+import LizardF from '../enemies/LizardF';
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -68,6 +69,7 @@ export default class Game extends Phaser.Scene {
     // Knives
     this.knives = this.physics.add.group({
       classType: Phaser.Physics.Arcade.Image,
+      maxSize: 3,
     });
 
     // add player
@@ -75,14 +77,21 @@ export default class Game extends Phaser.Scene {
     this.knightM.setKnives(this.knives);
 
     // Lizard generation
-    this.lizards = this.physics.add.group();
-    this.lizards.addMultiple(
-      [
-        this.add.lizard_f(192, 48, 'lizard_f'),
-        this.add.lizard_f(192, 80, 'lizard_f'),
-      ],
-      true
-    );
+    this.lizards = this.physics.add.group({
+      classType: LizardF,
+      createCallback: (lizGo) => {
+        lizGo.body.onCollide = true;
+      },
+    });
+
+    const lizardsLayer = map.getObjectLayer('Lizards');
+    lizardsLayer.objects.forEach((lizObj) => {
+      this.lizards.get(
+        lizObj.x + lizObj.width * 0.5,
+        lizObj.y - lizObj.height * 0.5,
+        'lizard'
+      );
+    });
 
     //colliders
     this.physics.add.collider(this.knightM, wallsLayer);

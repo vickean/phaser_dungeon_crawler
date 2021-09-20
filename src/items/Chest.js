@@ -19,6 +19,6 @@ export default class Chest extends Phaser.Physics.Arcade.Sprite {
       coin.destroy();
     });
 
-    return Phaser.Math.Between(50, 200);
+    return Phaser.Math.Between(1000, 5000);
   }
 }

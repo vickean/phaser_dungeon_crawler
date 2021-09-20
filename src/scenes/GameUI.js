@@ -96,7 +96,7 @@ export default class GameUI extends Phaser.Scene {
       this.speech_lastphrase = lastText;
     }
 
-    if (t - this.speech_lasttime >= 1600 && this.speech_init) {
+    if (t - this.speech_lasttime >= 1500 && this.speech_init) {
       this.speech.setText('Hello there my scaly friends!');
       this.speech_init = false;
     }
